@@ -2,6 +2,8 @@
 //THE TEST SERVER IS RUNNING ON LOCALHOST:3000//
 ////////////////////////////////////////////////
 
+
+
 // PROBLEM 1
 /*
     In the index.html file in this folder there is a button with an id of 'say-hello-button'!
@@ -9,17 +11,21 @@
     Use querySelector to select that button and save it to a variable called sayHelloButton
 */
 
-// CODE HERE
+let sayHelloButton = document.querySelector('#say-hello-button');
 
 
 // PROBLEM 2
 /*
-    Create a function that changes sayHelloButton's background color to black and its text color to white (you can use the .style object or create a CSS class and use classList.add)
+    Create a function that changes sayHelloButton's background color to black and its text color to white 
+    (you can use the .style object or create a CSS class and use classList.add)
     
     Attach a mouseover event to sayHelloButton that calls the function you wrote
 */
 
-// CODE HERE
+sayHelloButton.addEventListener('mouseover', function(){
+    sayHelloButton.style.backgroundColor = 'black';
+    sayHelloButton.style.color = 'white';
+});
 
 
 // PROBLEM 3
@@ -31,7 +37,10 @@
     Attach another listener that fires your second function when the mouseout event occurs on the button
 */
 
-// CODE HERE
+sayHelloButton.addEventListener('mouseout', function(){
+    sayHelloButton.style.backgroundColor = '#EFEFEF';
+    sayHelloButton.style.color = 'black';
+})
 
 
 // PROBLEM 4
@@ -51,8 +60,8 @@ const sayHello = () => {
     })
 }
 // DO NOT EDIT FUNCTION
+sayHelloButton.addEventListener('click', sayHello);
 
-// CODE HERE
 
 
 // PROBLEM 5 
@@ -63,11 +72,19 @@ const sayHello = () => {
     
     Use axios inside the ohMy function to make a GET request to 'http://localhost:3000/animals' 
     
-    Handle the promise that's returned with a .then, which you should pass a callback function to. Inside the callback function, console.log the response's data (in the intermediate instructions we'll come back to this function and add HTML).
+    Handle the promise that's returned with a .then, which you should pass a callback function to. 
+    Inside the callback function, console.log the response's data 
+    (in the intermediate instructions we'll come back to this function and add HTML).
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios
+    .get('http://localhost:3000/animals')
+    .then(res => {
+        res.data
+        console.log(res.data)
+    })
+    //.catch(err => console.log(err));
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -75,30 +92,48 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
 
 // PROBLEM 6 
 /*
-    Now lets see if you can send a request param! inside repeatMyParam function below  make get request to 'http://localhost:3000/repeat/{SOMEPARAM}', but with a string instead of {SOMEPARAM}.  
+    Now lets see if you can send a request param! inside repeatMyParam function below  make get request to 
+    'http://localhost:3000/repeat/{SOMEPARAM}', but with a string instead of {SOMEPARAM}.  
 
     The function that runs when this request is made will return whatever parameter you sent 
 
-    Handle the promise returned from the request with a .then, which will take in a callback -- the callback function should print the response.data.
+    Handle the promise returned from the request with a .then, which will take in a 
+    callback -- the callback function should print the response.data.
     
-    Outside of the function, select the button with the id "repeat-button" and add a click event listener that calls the repeatMyParam function.
+    Outside of the function, select the button with the id "repeat-button" and add a click event listener 
+    that calls the repeatMyParam function.
     
     We'll be updating this function in the next problem.
 */
 
 const repeatMyParam = () => {
-    //YOUR CODE HERE
+    axios
+    .get('http://localhost:3000/repeat/Hello')
+    .then(res => {
+        res.data
+        console.log(res.data)
+        
+    })
+    // .catch(err => console.log(err));
+//let repeatText = document.getElementById('repeat-button');
+   repeatText.textContent = res.data;
+   repeatText.style.display = 'block';  
+  
 }
+let repeatText = document.getElementById('repeat-button').addEventListener("click", repeatMyParam);
+
+
 
 // PROBLEM 7
 /*
     Now that we have the response data, let's add it to our web page! 
     
-    Inside the repeatMyParam function above, grab the element with the id of 'repeat-text' and set its textContent property equal to the response data.
+    Inside the repeatMyParam function above, grab the element with the id of 'repeat-text' and set its textContent property 
+    equal to the response data.
 */
 
-// Code in the repeatMyParam function above
 
+//CODE IN THE REPEATMYPARAM FUNCTION ABOVE
 
 
 // PROBLEM 8
@@ -110,7 +145,13 @@ const repeatMyParam = () => {
     Outside of your new function, select the button with the id "query-button" and add a click event listener that calls your function.
 */
 
-// CODE HERE
+function queryToRequest(){
+    axios
+    .get('http://localhost:3000/repeat/search?q=tiger&oq=tiger&aqs=chrome.0.69i59j0l5.1612j0j7&sourceid=chrome&ie=UTF-8"')
+    .then(({data}) => console.log(data))
+}
+   
+let queryBtn = document.getElementById('query-button').addEventListener('click', queryToRequest);
 
 
 
